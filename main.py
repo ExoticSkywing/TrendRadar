@@ -2855,6 +2855,7 @@ def split_content_into_batches(
         base_footer = f"\n\n更新时间：{now.strftime('%Y-%m-%d %H:%M:%S')}"
         if update_info:
             base_footer += f"\nTrendRadar 发现新版本 {update_info['remote_version']}，当前 {update_info['current_version']}"
+        base_footer += "\n\n#新闻 全球 #热点新闻" 
     elif format_type == "ntfy":
         base_footer = f"\n\n> 更新时间：{now.strftime('%Y-%m-%d %H:%M:%S')}"
         if update_info:
@@ -3669,6 +3670,12 @@ def send_to_telegram(
             "parse_mode": "HTML",
             "disable_web_page_preview": True,
         }
+        
+        # 在最后一批消息中添加内联按钮
+        if i == len(batches):
+            payload["reply_markup"] = {
+                "inline_keyboard": [[{"text": "查看更多", "url": "https://news.1yo.cc"}]]
+            }
 
         try:
             response = requests.post(
