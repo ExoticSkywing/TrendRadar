@@ -3674,7 +3674,7 @@ def send_to_telegram(
         # 在最后一批消息中添加内联按钮
         if i == len(batches):
             payload["reply_markup"] = {
-                "inline_keyboard": [[{"text": "查看更多", "url": "https://news.1yo.cc"}]]
+                "inline_keyboard": [[{"text": "查看更多", "url": "https://news.1yo.cc"}, {"text": "全网最优质免费节点", "url": "https://t.me/nebuluxe/906"}]]
             }
 
         try:
