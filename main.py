@@ -2854,8 +2854,7 @@ def split_content_into_batches(
     elif format_type == "telegram":
         base_footer = f"\n\n更新时间：{now.strftime('%Y-%m-%d %H:%M:%S')}"
         if update_info:
-            base_footer += f"\nTrendRadar 发现新版本 {update_info['remote_version']}，当前 {update_info['current_version']}"
-        base_footer += "\n\n#新闻 全球 #热点新闻" 
+            base_footer += f"\nTrendRadar 发现新版本 {update_info['remote_version']}，当前 {update_info['current_version']}" 
     elif format_type == "ntfy":
         base_footer = f"\n\n> 更新时间：{now.strftime('%Y-%m-%d %H:%M:%S')}"
         if update_info:
@@ -3663,6 +3662,13 @@ def send_to_telegram(
         if len(batches) > 1:
             batch_header = f"<b>[第 {i}/{len(batches)} 批次]</b>\n\n"
             batch_content = batch_header + batch_content
+        
+        # 在最后一批消息中添加签名及说明
+        if i == len(batches):
+            batch_content += "\n\n· · · · · · · · · · · · · · · · · · · · · · · · · · ·"
+            batch_content += "\n\n#发生了什么\n\n关于 发生了什么 请查看👉 <a href='https://t.me/nebuluxe/893'>详细介绍</a>"
+            batch_content += "\n\n"
+            batch_content += "\n\n<a href='https://t.me/nebuluxe'>⭐ 浪漫宇宙</a> | <a href='https://t.me/omni_stars'>💬 加入讨论</a> | <a href='https://t.me/nebuluxe_bot'>📧 反馈私聊</a>"
 
         payload = {
             "chat_id": chat_id,
@@ -3674,7 +3680,7 @@ def send_to_telegram(
         # 在最后一批消息中添加内联按钮
         if i == len(batches):
             payload["reply_markup"] = {
-                "inline_keyboard": [[{"text": "查看更多", "url": "https://news.1yo.cc"}, {"text": "全网最优质免费节点", "url": "https://t.me/nebuluxe/906"}]]
+                "inline_keyboard": [[{"text": "查看更多", "url": "https://news.1yo.cc"}, {"text": "每日免费优质节点", "url": "https://t.me/nebuluxe/906"}]]
             }
 
         try:
